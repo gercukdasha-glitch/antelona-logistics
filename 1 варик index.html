@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antelona Logistics — грузоперевозки и логистика</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e1e1e;
+            background: #ffffff;
+        }
+        /* ===== ЯРКИЕ ЦВЕТА ===== */
+        :root {
+            --primary: #FF5E00;      /* Оранжевый (акцент) */
+            --secondary: #00B4D8;    /* Бирюзовый */
+            --accent-yellow: #FFD60A;
+            --dark-bg: #0A1F2E;
+            --gradient-hero: linear-gradient(135deg, #0A1F2E 0%, #1B3A4B 50%, #FF5E00 100%);
+            --card-shadow: 0 12px 35px rgba(255,94,0,0.15);
+        }
+        .text-primary-custom { color: var(--primary); }
+        .bg-primary-custom { background-color: var(--primary); }
+        .btn-primary-custom {
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 50px;
+            transition: 0.3s;
+            box-shadow: 0 8px 25px rgba(255,94,0,0.4);
+        }
+        .btn-primary-custom:hover {
+            background: #e05200;
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(255,94,0,0.6);
+        }
+        .btn-outline-custom {
+            border: 2px solid white;
+            color: white;
+            border-radius: 50px;
+            padding: 14px 36px;
+            font-weight: 600;
+        }
+        .btn-outline-custom:hover {
+            background: white;
+            color: var(--dark-bg);
+        }
+        /* ===== HERO ===== */
+        .hero {
+            background: var(--gradient-hero);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,94,0,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero h1 {
+            font-weight: 900;
+            font-size: 4rem;
+            line-height: 1.1;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-yellow), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+        /* ===== СЕКЦИИ ===== */
+        .section-title {
+            font-weight: 800;
+            font-size: 2.5rem;
+        }
+        .section-title span {
+            color: var(--primary);
+        }
+        .section-subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        /* ===== КАРТОЧКИ ===== */
+        .service-card, .price-card, .doc-card, .review-card {
+            border: none;
+            border-radius: 24px;
+            transition: 0.4s;
+            background: white;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        }
+        .service-card:hover, .price-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--card-shadow);
+        }
+        .service-card .card-body, .price-card .card-body {
+            padding: 2rem;
+        }
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+        }
+        .price-card .price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .price-card .price small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #6c757d;
+        }
+        .popular-badge {
+            background: var(--primary);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        /* ===== ДОКУМЕНТЫ ===== */
+        .doc-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .doc-card i {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        /* ===== ОТЗЫВЫ ===== */
+        .review-card {
+            padding: 2rem;
+            position: relative;
+            border-left: 6px solid var(--primary);
+        }
+        .review-stars {
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+        }
+        .review-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+        /* ===== ФОТО ИЗ INSTAGRAM (стилизация) ===== */
+        .insta-grid img {
+            border-radius: 16px;
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .insta-grid img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(255,94,0,0.3);
+        }
+        /* ===== КОНТАКТЫ ===== */
+        .contact-section {
+            background: var(--dark-bg);
+            color: white;
+        }
+        .contact-section a {
+            color: var(--accent-yellow);
+            font-weight: 600;
+        }
+        .contact-section a:hover {
+            color: var(--primary);
+        }
+        .contact-section .form-control {
+            border-radius: 16px;
+            padding: 14px 20px;
+            border: 2px solid transparent;
+        }
+        .contact-section .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255,94,0,0.2);
+        }
+        .footer {
+            background: #06121c;
+            color: #a0b8c5;
+        }
+        .footer i {
+            color: var(--primary);
+        }
+        /* ===== АНИМАЦИИ ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.45s; }
+        .delay-4 { animation-delay: 0.6s; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.6rem; }
+            .hero p { font-size: 1rem; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== НАВИГАЦИЯ ===== -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: rgba(10,31,46,0.92); backdrop-filter: blur(8px);">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="#">
+            <i class="fas fa-truck-fast me-2" style="color: var(--primary);"></i>Antelona Logistics
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="#hero">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">О нас</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Услуги</a></li>
+                <li class="nav-item"><a class="nav-link" href="#pricing">Цены</a></li>
+                <li class="nav-item"><a class="nav-link" href="#docs">Документы</a></li>
+                <li class="nav-item"><a class="nav-link" href="#reviews">Отзывы</a></li>
+                <li class="nav-item"><a class="nav-link" href="#gallery">Фото</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero" class="hero">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7 fade-in">
+                <h1>Надёжная логистика<br>с <span>ярким</span> сервисом</h1>
+                <p class="mb-4">Грузоперевозки по России и СНГ. От 1 кг до полных фур. Цены от 25 ₽/км.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="https://www.instagram.com/antelona_logistics?igsh=MThqbmRndWdlaHMxOQ%3D%3D" target="_blank" class="btn btn-primary-custom btn-lg">
+                        <i class="fab fa-instagram me-2"></i> Instagram
+                    </a>
+                    <a href="#pricing" class="btn btn-outline-custom btn-lg">Наши цены</a>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center d-none d-lg-block fade-in delay-2">
+                <i class="fas fa-shipping-fast" style="font-size: 14rem; opacity: 0.12; color: var(--accent-yellow);"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== О КОМПАНИИ ===== -->
+<section id="about" class="py-5" style="background: white;">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0 fade-in">
+                <h2 class="section-title mb-3">О компании <span>Antelona</span></h2>
+                <p class="text-muted" style="font-size: 1.1rem;">
+                    Работаем с 2015 года. Собственный автопарк — 15 тягачей, 30 полуприцепов. 
+                    Доставляем грузы любой сложности: от документов до негабаритного оборудования.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-4 mb-3 text-center">
+                        <h3 class="fw-bold text-primary-custom">1200+</h3>
+                        <p class="text-muted">Заказов</p>
+                    </div>
+                    <div class="col-4 mb-3 text-center">
+                        <h3 class="fw-bold text-primary-custom">98%</h3>
+                        <p class="text-muted">Вовремя</p>
+                    </div>
+                    <div class="col-4 mb-3 text-center">
+                        <h3 class="fw-bold text-primary-custom">4.9★</h3>
+                        <p class="text-muted">Рейтинг</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 fade-in delay-2">
+                <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=2070&auto=format&fit=crop" 
+                     alt="Логистика" class="img-fluid rounded-4 shadow" style="max-height: 450px; object-fit: cover; width: 100%;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== УСЛУГИ ===== -->
+<section id="services" class="py-5" style="background: #f9fcff;">
+    <div class="container py-4">
+        <h2 class="section-title text-center mb-2">Наши <span>услуги</span></h2>
+        <p class="section-subtitle text-center mb-5">Полный цикл логистики — закажите прямо сейчас</p>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 fade-in">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-box service-icon"></i>
+                        <h5 class="fw-bold">Сборные грузы</h5>
+                        <p class="text-muted">От 1 кг. Забор и доставка по всей России.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 fade-in delay-1">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-truck service-icon"></i>
+                        <h5 class="fw-bold">Фуры / 20-40 т</h5>
+                        <p class="text-muted">Тенты, рефрижераторы, изотерма.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 fade-in delay-2">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-weight-hanging service-icon"></i>
+                        <h5 class="fw-bold">Негабарит</h5>
+                        <p class="text-muted">Спецтехника, станки, конструкции.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ЦЕНЫ ===== -->
+<section id="pricing" class="py-5" style="background: white;">
+    <div class="container py-4">
+        <h2 class="section-title text-center mb-2">Наши <span>цены</span></h2>
+        <p class="section-subtitle text-center mb-5">Прозрачно и без скрытых платежей</p>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-4 col-md-6 fade-in">
+                <div class="card price-card h-100 text-center">
+                    <div class="card-body">
+                        <div class="popular-badge">Хит</div>
+                        <h5 class="fw-bold">Сборный груз</h5>
+                        <p class="price">от 25 ₽<small>/кг</small></p>
+                        <p class="text-muted">Минимальная партия — 25 кг</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check text-success me-2"></i>Забор в день заявки</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Страховка 0,5%</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary-custom w-100 mt-3">Заказать</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 fade-in delay-1">
+                <div class="card price-card h-100 text-center border-2" style="border-color: var(--primary) !important;">
+                    <div class="card-body">
+                        <div class="popular-badge" style="background: var(--secondary);">Популярное</div>
+                        <h5 class="fw-bold">Фура 20 т</h5>
+                        <p class="price">от 65 ₽<small>/км</small></p>
+                        <p class="text-muted">Любое направление РФ</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check text-success me-2"></i>ГЛОНАСС мониторинг</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Электронные накладные</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary-custom w-100 mt-3">Заказать</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 fade-in delay-2">
+                <div class="card price-card h-100 text-center">
+                    <div class="card-body">
+                        <div class="popular-badge">Premium</div>
+                        <h5 class="fw-bold">Негабарит</h5>
+                        <p class="price">от 120 ₽<small>/км</small></p>
+                        <p class="text-muted">Согласование маршрута</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check text-success me-2"></i>Разрешения включены</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Сопровождение ГИБДД</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary-custom w-100 mt-3">Заказать</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ДОКУМЕНТЫ ===== -->
+<section id="docs" class="py-5" style="background: #f9fcff;">
+    <div class="container py-4">
+        <h2 class="section-title text-center mb-2">Документы <span>и гарантии</span></h2>
+        <p class="section-subtitle text-center mb-5">Работаем полностью официально</p>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3 fade-in">
+                <div class="doc-card">
+                    <i class="fas fa-file-invoice"></i>
+                    <h5 class="fw-bold mt-2">Договор</h5>
+                    <p class="text-muted">Типовой или индивидуальный договор перевозки</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 fade-in delay-1">
+                <div class="doc-card">
+                    <i class="fas fa-file-signature"></i>
+                    <h5 class="fw-bold mt-2">ТТН / ТН</h5>
+                    <p class="text-muted">Товарно-транспортная накладная</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 fade-in delay-2">
+                <div class="doc-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h5 class="fw-bold mt-2">Страховка</h5>
+                    <p class="text-muted">Полис страхования груза</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 fade-in delay-3">
+                <div class="doc-card">
+                    <i class="fas fa-file-pdf"></i>
+                    <h5 class="fw-bold mt-2">Счет / Акт</h5>
+                    <p class="text-muted">Закрывающие документы онлайн</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ОТЗЫВЫ ===== -->
+<section id="reviews" class="py-5" style="background: white;">
+    <div class="container py-4">
+        <h2 class="section-title text-center mb-2">Отзывы <span>клиентов</span></h2>
+        <p class="section-subtitle text-center mb-5">Более 200 положительных отзывов на картах и в соцсетях</p>
+        <div class="row g-4">
+            <div class="col-lg-4 fade-in">
+                <div class="review-card">
+                    <div class="review-stars mb-2">★★★★★</div>
+                    <p class="text-muted">«Отправили оборудование из Москвы в Новосибирск. Всё пришло целое и на день раньше срока. Рекомендую!»</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <img src="https://i.pravatar.cc/56?img=1" class="review-avatar me-3" alt="Аватар">
+                        <div>
+                            <h6 class="fw-bold mb-0">Алексей С.</h6>
+                            <small class="text-muted">ООО «ТехноСфера»</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 fade-in delay-1">
+                <div class="review-card">
+                    <div class="review-stars mb-2">★★★★★</div>
+                    <p class="text-muted">«Работаем с Antelona уже 2 года. Ни разу не подвели. Цены адекватные, менеджеры всегда на связи.»</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <img src="https://i.pravatar.cc/56?img=5" class="review-avatar me-3" alt="Аватар">
+                        <div>
+                            <h6 class="fw-bold mb-0">Марина К.</h6>
+                            <small class="text-muted">ИП «ЛогистикПро»</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 fade-in delay-2">
+                <div class="review-card">
+                    <div class="review-stars mb-2">★★★★★</div>
+                    <p class="text-muted">«Быстро организовали перевозку негабарита. Спасибо за оперативность и профессионализм!»</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <img src="https://i.pravatar.cc/56?img=12" class="review-avatar me-3" alt="Аватар">
+                        <div>
+                            <h6 class="fw-bold mb-0">Дмитрий В.</h6>
+                            <small class="text-muted">ЗАО «СтройКомплект»</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ГАЛЕРЕЯ (ФОТО ИЗ INSTAGRAM) ===== -->
+<section id="gallery" class="py-5" style="background: #f9fcff;">
+    <div class="container py-4">
+        <h2 class="section-title text-center mb-2">Фото с нашей <span>работы</span></h2>
+        <p class="section-subtitle text-center mb-5">Подписывайтесь на Instagram, чтобы видеть ежедневные рейсы</p>
+        <div class="row g-3 insta-grid">
+            <div class="col-6 col-md-3 fade-in">
+                <a href="https://www.instagram.com/antelona_logistics" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?q=80&w=2070&auto=format&fit=crop" alt="Фура в рейсе">
+                </a>
+            </div>
+            <div class="col-6 col-md-3 fade-in delay-1">
+                <a href="https://www.instagram.com/antelona_logistics" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?q=80&w=2070&auto=format&fit=crop" alt="Погрузка">
+                </a>
+            </div>
+            <div class="col-6 col-md-3 fade-in delay-2">
+                <a href="https://www.instagram.com/antelona_logistics" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?q=80&w=2070&auto=format&fit=crop" alt="Склад">
+                </a>
+            </div>
+            <div class="col-6 col-md-3 fade-in delay-3">
+                <a href="https://www.instagram.com/antelona_logistics" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop" alt="Доставка">
+                </a>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="https://www.instagram.com/antelona_logistics?igsh=MThqbmRndWdlaHMxOQ%3D%3D" target="_blank" class="btn btn-primary-custom">
+                <i class="fab fa-instagram me-2"></i> Больше фото в Instagram
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== КОНТАКТЫ ===== -->
+<section id="contact" class="contact-section py-5">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-lg-5 fade-in">
+                <h2 class="fw-bold mb-4">Свяжитесь с нами</h2>
+                <p class="mb-2"><i class="fas fa-phone-alt me-2" style="color: var(--primary);"></i> <a href="tel:8932405658" style="color: white; text-decoration: none;">8 (932) 405-65-8</a></p>
+                <p class="mb-3"><i class="fas fa-envelope me-2" style="color: var(--primary);"></i> info@antelona-logistics.ru</p>
+                <a href="https://www.instagram.com/antelona_logistics?igsh=MThqbmRndWdlaHMxOQ%3D%3D" target="_blank" class="btn btn-primary-custom btn-lg mt-2">
+                    <i class="fab fa-instagram me-2"></i> Instagram
+                </a>
+            </div>
+            <div class="col-lg-7 mt-4 mt-lg-0 fade-in delay-1">
+                <h4 class="fw-bold mb-3">Оставьте заявку</h4>
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Ваше имя">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="tel" class="form-control" placeholder="Телефон">
+                        </div>
+                        <div class="col-12">
+                            <input type="text" class="form-control" placeholder="Откуда → Куда">
+                        </div>
+                        <div class="col-12">
+                            <textarea class="form-control" rows="3" placeholder="Вес, объём, особенности..."></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary-custom w-100">Отправить заявку</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ПОДВАЛ ===== -->
+<footer class="footer py-4 text-center">
+    <div class="container">
+        <p class="mb-0">
+            <i class="fas fa-truck-fast me-1" style="color: var(--primary);"></i> 
+            © 2025 Antelona Logistics | Все права защищены
+        </p>
+        <p class="mb-0 mt-2 small">
+            <a href="https://www.instagram.com/antelona_logistics?igsh=MThqbmRndWdlaHMxOQ%3D%3D" target="_blank" class="text-white-50">
+                <i class="fab fa-instagram me-1"></i> Instagram
+            </a> 
+            <span class="mx-2">|</span> 
+            <a href="#" class="text-white-50">Политика конфиденциальности</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
